@@ -1,16 +1,5 @@
 #!/usr/bin/env pybricks-micropython
 
-"""
-Example LEGO® MINDSTORMS® EV3 Robot Educator Driving Base Program
------------------------------------------------------------------
-
-This program requires LEGO® EV3 MicroPython v2.0.
-Download: https://education.lego.com/en-us/support/mindstorms-ev3/python-for-ev3
-
-Building instructions can be found at:
-https://education.lego.com/en-us/support/mindstorms-ev3/building-instructions#robot
-"""
-
 from pybricks.hubs import EV3Brick
 from pybricks.ev3devices import Motor
 from pybricks.nxtdevices import UltrasonicSensor
@@ -41,24 +30,9 @@ obstacle_sensor_back = UltrasonicSensor(Port.S2)
 # Play a sound to tell us when we are ready to start moving
 ev3.speaker.beep()
 
-# The following loop makes the robot drive forward until it detects an
-# obstacle. Then it backs up and turns around. It keeps on doing this
-# until you stop the program.
-
-# Begin driving forward at 200 millimeters per second.
+# Begin driving forward at 100 millimeters per second.
 robot.drive(100, 0)
 
-# Wait until an obstacle is detected. This is done by repeatedly
-# doing nothing (waiting for 10 milliseconds) while the measured
-# distance is still greater than 300 mm.
-# while obstacle_sensor_font.distance() > 100:
-#     wait(10)
-#
-# # Drive backward for 300 millimeters.
-# robot.straight(-100)
-#
-# # Turn around by 120 degrees
-# robot.turn(45)
 dis_state_start=0
 dis_state_end=0
 
