@@ -4,7 +4,6 @@ The path following is complete.
 Complete obstacle avoidance.
 Complete identification of parking Spaces.
 
-Before:
 # 17/12/2021 main1.py update
 ### Lego-ev3-self-parking-robot
 Status: Currently in phase 2 of the Lego project.
