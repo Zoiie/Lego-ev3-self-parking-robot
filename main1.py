@@ -12,8 +12,8 @@ https://education.lego.com/en-us/support/mindstorms-ev3/building-instructions#ro
 """
 
 from pybricks.hubs import EV3Brick
-from pybricks.ev3devices import Motor
-from pybricks.ev3devices import UltrasonicSensor
+from pybricks.ev3devices import UltrasonicSensor,ColorSensor
+from pybricks.ev3devices import Motor, ColorSensor
 from pybricks.parameters import Port
 from pybricks.robotics import DriveBase
 from pybricks.tools import wait
@@ -27,7 +27,12 @@ left_motor = Motor(Port.D)
 right_motor = Motor(Port.A)
 font_motor = Motor(Port.B)
 
+## Color_sensor
+line_sensor=ColorSensor(Port.S4) #new
+# color_2=ColorSensor(Port.C) #old
+
 # Initialize the drive base.
+# robot = DriveBase(left_motor, right_motor, wheel_diameter=55.5, axle_track=104)
 robot = DriveBase(left_motor, right_motor, wheel_diameter=55.5, axle_track=104)
 
 # Initialize the Ultrasonic Sensor. It is used to detect
@@ -69,30 +74,61 @@ dis2_back=0
 space=0
 dis3_back=0
 
+BLACK = 9
+WHITE = 85
+threshold = (BLACK + WHITE) / 2
+# PROPORTIONAL_GAIN = 1.2
+PROPORTIONAL_GAIN = 1.5
+
+
 begin = True
 begin_space_flag=False
 end_space_flag=False
 
-### Check the side obstacles
-robot.drive(50, 0)
+## Check the side obstacles
+# Calculate the deviation from the threshold.
+
+# print("turn rate:",turn_rate)
+
+robot.drive(50,0)
 
 while begin==True:
 
+    deviation = line_sensor.reflection() - threshold
+    #
+    # # Calculate the turn rate.
+    turn_rate = PROPORTIONAL_GAIN * deviation
+
+    # Set the drive base speed and turn rate.
+    # turn_rate=3
+    # robot.drive(50, turn_rate+50)
+
+    # robot.drive(50, 0)
+    font_motor.track_target(turn_rate + 50)
+
+    print("turn rate:", turn_rate+50)
+    if obstacle_sensor_right.distance()<50:
+        font_motor.track_target(20)
+
+    # You can wait for a short time or do other things in this loop.
+    # print("new color sensor value:",line_sensor.color(),line_sensor.rgb())
+    # print("old color sensor value:",color_2)
+
     # font_motor.track_target(0)
-    if obstacle_sensor_right.distance()<100:
+    if obstacle_sensor_right.distance()<200:
         begin_space=robot.state()[0]
         begin_space_flag=True
         # print("begin_space_flag:",begin_space_flag)
 
-    if begin_space_flag==True and obstacle_sensor_right.distance() >100:
+    if begin_space_flag==True and obstacle_sensor_right.distance() >200:
         end_space=robot.state()[0]
         # print("end_space:",end_space)
         space=end_space - begin_space
-        print("Space=",space)
+        # print("Space=",space)
     # print("obstacle_sensor_right.distance()=",obstacle_sensor_right.distance())
     # print("end_space-begin_space=",end_space-begin_space)
 
-    if end_space-begin_space>70 and obstacle_sensor_right.distance()<100:
+    if end_space-begin_space>70 and obstacle_sensor_right.distance()<200:
         end_space_flag=True
         # print("end_space_flag:",end_space_flag)
         dis_state_start = robot.state()[0]
@@ -107,43 +143,43 @@ while begin==True:
         robot.drive(50, 0)
         forward=robot.state()[0]
 
-        while forward-dis_state_start>25 and space<130:
+        while forward-dis_state_start>40 and space<130:
             robot.drive(-50,0)
             font_motor.track_target(-45)
-            print(dis_state_start,robot.state()[0])
-            print("dis_state_start-robot.state()[0]::",dis_state_start-robot.state()[0])
+            # print(dis_state_start,robot.state()[0])
+            # print("dis_state_start-robot.state()[0]::",dis_state_start-robot.state()[0])
             dis_back=robot.state()[0]
 
-            while dis_state_start-robot.state()[0]>170:
+            while dis_state_start-robot.state()[0]>150:
                 font_motor.track_target(0)
                 robot.drive(-50,0)
-                print(robot.state()[0],dis_back,"robot.state()[0]-dis_back=",robot.state()[0]-dis_back)
+                # print(robot.state()[0],dis_back,"robot.state()[0]-dis_back=",robot.state()[0]-dis_back)
                 while robot.state()[0]-dis_back<-dis_obstacle:
                     # print("????")
                     robot.stop()
 
-        while forward-dis_state_start>25 and space>=130:
+        while forward-dis_state_start>40 and space>=130:
             robot.drive(-50,0)
             font_motor.track_target(-45)
             print(dis_state_start,robot.state()[0])
-            print("dis_state_start-robot.state()[0]::",dis_state_start-robot.state()[0])
+            # print("dis_state_start-robot.state()[0]::",dis_state_start-robot.state()[0])
             dis_back=robot.state()[0]
 
-            while dis_state_start-robot.state()[0]>130:
+            while dis_state_start-robot.state()[0]>100:
                 font_motor.track_target(45)
                 robot.drive(-50,0)
-                print(robot.state()[0],dis_back,"robot.state()[0]-dis_back=",robot.state()[0]-dis_back)
+                # print(robot.state()[0],dis_back,"robot.state()[0]-dis_back=",robot.state()[0]-dis_back)
                 dis2_back=robot.state()[0]
-                print('robot.state()[0]-dis_back:',robot.state()[0]-dis_back)
+                # print('robot.state()[0]-dis_back:',robot.state()[0]-dis_back)
                 dis3_back=robot.state()[0]-dis_back
-                print("obstacle_sensor_back.distance()=",obstacle_sensor_back.distance())
+                # print("obstacle_sensor_back.distance()=",obstacle_sensor_back.distance())
 
                 while dis3_back<-120 or obstacle_sensor_back.distance()<20:
                     dis3_back=-121
                     font_motor.track_target(0)
                     robot.drive(50,0)
-                    print("robot.state():",robot.state())
-                    print(robot.state()[0]-dis2_back)
+                    # print("robot.state():",robot.state())
+                    # print(robot.state()[0]-dis2_back)
                     while robot.state()[0]-dis2_back>30:
                         robot.stop()
                     while obstacle_sensor_font.distance()<20:
