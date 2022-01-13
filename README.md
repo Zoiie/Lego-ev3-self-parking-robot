@@ -1,11 +1,11 @@
-# 12/01/2022 update: 
+# 12/01/2022 main1.py update: 
 Reverse side and reverse into storage.
 The path following is complete.
 Complete obstacle avoidance.
 Complete identification of parking Spaces.
 
 Before:
-# 17/12/2021 update
+# 17/12/2021 main1.py update
 ### Lego-ev3-self-parking-robot
 Status: Currently in phase 2 of the Lego project.
 Objective: To identify obstacles, detect whether the space meets the parking conditions, and automatically stop.
