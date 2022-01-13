@@ -1,8 +1,8 @@
 # 12/01/2022 main1.py update: 
-Reverse side and reverse into storage.
-The path following is complete.
-Complete obstacle avoidance.
-Complete identification of parking Spaces.
+### Reverse side and reverse into storage.
+### The path following is complete.
+### Complete obstacle avoidance.
+### Complete identification of parking Spaces.
 
 # 17/12/2021 main1.py update
 ### Lego-ev3-self-parking-robot
