@@ -1,3 +1,8 @@
+# 16/01/2022 main1.py update: 
+### fix up some detial problems
+### more realiable
+
+
 # 12/01/2022 main1.py update: 
 ### Reverse side and reverse into storage.
 ### The path following is complete.
