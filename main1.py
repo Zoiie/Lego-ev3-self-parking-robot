@@ -116,14 +116,15 @@ while begin==True:
     if obstacle_sensor_font.distance()<200:
         wait(10)
 
-    if obstacle_sensor_back.distance()<100:
-        wait(10)
+    
 
     while end_space_flag==True:
         robot.drive(50, 0)
         forward=robot.state()[0]
 
         while forward-dis_state_start>40 and space<130:
+            if obstacle_sensor_back.distance()<100:
+                wait(10)
             robot.drive(-50,0)
             font_motor.track_target(-45)
             dis_back=robot.state()[0]
@@ -136,6 +137,8 @@ while begin==True:
 
         while forward-dis_state_start>40 and space>=130:
             robot.drive(-50,0)
+            if obstacle_sensor_back.distance()<100:
+                wait(10)
             font_motor.track_target(-45)
             print(dis_state_start,robot.state()[0])
             dis_back=robot.state()[0]
