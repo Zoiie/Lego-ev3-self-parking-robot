@@ -1,3 +1,7 @@
+# 19/01/2022 main1.py update: 
+### modified parking space, stop distence of the font/back/right senser
+### add function: Stop while it is turnning back in the parking space
+
 # 16/01/2022 main1.py update: 
 ### fix up some detial problems
 ### more realiable
